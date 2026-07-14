@@ -30,15 +30,26 @@ if __name__ == "__main__":
         mlflow.log_metric("accuracy", acc)
         print(f"Accuracy: {acc:.4f}")
 
-        # Log model with explicit pip_requirements so that MLflow generates
-        # a Dockerfile using the current Python version (3.12) instead of
-        # its hardcoded default (3.9) which is no longer supported by pip.
+        # Log model with explicit conda_env to ensure MLflow generates
+        # a Dockerfile using Python 3.12 instead of its hardcoded default (3.9)
+        # which is no longer supported by pip's get-pip.py script.
+        conda_env = {
+            "name": "mlflow-env",
+            "channels": ["conda-forge"],
+            "dependencies": [
+                "python=3.12.7",
+                "pip",
+                {
+                    "pip": [
+                        "pandas",
+                        "scikit-learn",
+                        "mlflow==2.19.0",
+                    ]
+                },
+            ],
+        }
         mlflow.sklearn.log_model(
             sk_model=model,
             artifact_path="model",
-            pip_requirements=[
-                f"pandas=={pd.__version__}",
-                "scikit-learn",
-                "mlflow==2.19.0",
-            ],
+            conda_env=conda_env,
         )

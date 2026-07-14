@@ -7,12 +7,12 @@ import os
 
 if __name__ == "__main__":
     # mlflow.set_tracking_uri("http://127.0.0.1:5000/")
-    mlflow.set_experiment("Latihan Credit Scoring")
+    # mlflow.set_experiment("Latihan Credit Scoring")
     
     # Use autolog
     mlflow.sklearn.autolog()
     
-    with mlflow.start_run(run_name="basic_model"):
+    with mlflow.start_run():
         # Load preprocessed data
         base_dir = os.path.dirname(os.path.abspath(__file__))
         data_dir = os.path.join(base_dir, "credit_scoring_preprocessing")

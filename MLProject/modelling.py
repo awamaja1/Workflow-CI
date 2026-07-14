@@ -43,7 +43,7 @@ if __name__ == "__main__":
                     "pip": [
                         "pandas",
                         "scikit-learn",
-                        "mlflow==2.19.0",
+                        "mlflow",
                     ]
                 },
             ],

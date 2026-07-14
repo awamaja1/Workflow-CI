@@ -6,7 +6,7 @@ import mlflow.sklearn
 import os
 
 if __name__ == "__main__":
-    mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+    # mlflow.set_tracking_uri("http://127.0.0.1:5000/")
     mlflow.set_experiment("Latihan Credit Scoring")
     
     # Use autolog
@@ -14,8 +14,8 @@ if __name__ == "__main__":
     
     with mlflow.start_run(run_name="basic_model"):
         # Load preprocessed data
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        data_dir = os.path.join(base_dir, "Eksperimen_SML_MasMohamadRafiNouvalFadil", "preprocessing", "credit_scoring_preprocessing")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        data_dir = os.path.join(base_dir, "credit_scoring_preprocessing")
         
         train_df = pd.read_csv(os.path.join(data_dir, "train.csv"))
         test_df = pd.read_csv(os.path.join(data_dir, "test.csv"))

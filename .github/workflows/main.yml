@@ -34,14 +34,14 @@ jobs:
       - name: Get latest MLflow run_id
         id: get_run_id
         run: |
-          # Get the experiment ID (numeric folder) first
-          EXP_ID=$(ls mlruns/ | grep -E '^[0-9]+$' | head -n 1)
-          # Get the run UUID (32-char hex folder inside the experiment)
-          RUN_ID=$(ls mlruns/$EXP_ID | grep -E '^[0-9a-f]{32}$' | head -n 1)
+          # Find the numeric experiment ID folder
+          EXP_ID=$(find mlruns -mindepth 1 -maxdepth 1 -type d -name "[0-9]*" -exec basename {} \; | head -n 1)
+          # Find the run ID folder inside the experiment
+          RUN_ID=$(find mlruns/$EXP_ID -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename {} \; | grep -v "datasets" | head -n 1)
           echo "EXP_ID=$EXP_ID" >> $GITHUB_ENV
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Model path: mlruns/$EXP_ID/$RUN_ID/artifacts/model"
-          ls mlruns/$EXP_ID/$RUN_ID/artifacts/
+          ls -la mlruns/$EXP_ID/$RUN_ID/artifacts/
           
       - name: Upload Artifacts to GitHub
         uses: actions/upload-artifact@v4

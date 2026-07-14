@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Work/Course/Dicoding/Submission%20-%20Membangun%20Sistem%20Machine%20Learning/Workflow-CI/mlruns/0/1fb02f9622e443d79345ae6e333b3ede/artifacts
+end_time: 1784045774616
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1fb02f9622e443d79345ae6e333b3ede
+run_name: enchanting-pig-560
+run_uuid: 1fb02f9622e443d79345ae6e333b3ede
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784045774295
+status: 4
+tags: []
+user_id: PC2021

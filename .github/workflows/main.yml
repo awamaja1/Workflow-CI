@@ -36,8 +36,8 @@ jobs:
         run: |
           # Find the numeric experiment ID folder
           EXP_ID=$(find mlruns -mindepth 1 -maxdepth 1 -type d -name "[0-9]*" -exec basename {} \; | head -n 1)
-          # Find the run ID folder inside the experiment
-          RUN_ID=$(find mlruns/$EXP_ID -mindepth 1 -maxdepth 1 -type d -not -name ".*" -exec basename {} \; | grep -v "datasets" | head -n 1)
+          # Find the run ID folder inside the experiment (excluding models and datasets)
+          RUN_ID=$(find mlruns/$EXP_ID -mindepth 1 -maxdepth 1 -type d -not -name ".*" -not -name "models" -not -name "datasets" -exec basename {} \; | head -n 1)
           echo "EXP_ID=$EXP_ID" >> $GITHUB_ENV
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Model path: mlruns/$EXP_ID/$RUN_ID/artifacts/model"

@@ -6,9 +6,8 @@ import mlflow.sklearn
 import os
 
 if __name__ == "__main__":
-    # Tracking URI is left to default (local mlruns/) for CI compatibility
-    # mlflow.set_tracking_uri("http://127.0.0.1:5000/")
-    # mlflow.set_experiment("Latihan Credit Scoring")
+    # Use autolog for basic criteria
+    mlflow.sklearn.autolog()
 
     with mlflow.start_run():
         # Load preprocessed data
@@ -30,26 +29,5 @@ if __name__ == "__main__":
         mlflow.log_metric("accuracy", acc)
         print(f"Accuracy: {acc:.4f}")
 
-        # Log model with explicit conda_env to ensure MLflow generates
-        # a Dockerfile using Python 3.12 instead of its hardcoded default (3.9)
-        # which is no longer supported by pip's get-pip.py script.
-        conda_env = {
-            "name": "mlflow-env",
-            "channels": ["conda-forge"],
-            "dependencies": [
-                "python=3.12.7",
-                "pip",
-                {
-                    "pip": [
-                        "pandas",
-                        "scikit-learn",
-                        "mlflow",
-                    ]
-                },
-            ],
-        }
-        mlflow.sklearn.log_model(
-            sk_model=model,
-            artifact_path="model",
-            conda_env=conda_env,
-        )
+        # Log model
+        mlflow.sklearn.log_model(model, "model")
